@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <string.h>
+
+struct Funcionario {
+    char nome[50];
+    float salario;
+    int identificador;
+    char cargo[50];
+};
+
+void preencherFuncionario(struct Funcionario *funcionario) {
+    printf("Digite o nome do funcionario: ");
+    scanf("%s", funcionario->nome);
+
+    printf("Digite o salario do funcionario: ");
+    scanf("%f", &funcionario->salario);
+
+    printf("Digite o identificador do funcionario: ");
+    scanf("%d", &funcionario->identificador);
+
+    printf("Digite o cargo do funcionario: ");
+    scanf("%s", funcionario->cargo);
+}
+
+void imprimirFuncionario(const struct Funcionario *funcionario) {
+    printf("\nInformacoes do funcionario:\n");
+    printf("Nome: %s\n", funcionario->nome);
+    printf("Salario: %.2f\n", funcionario->salario);
+    printf("Identificador: %d\n", funcionario->identificador);
+    printf("Cargo: %s\n", funcionario->cargo);
+}
+
+void alterarSalario(struct Funcionario *funcionario, float novoSalario) {
+    funcionario->salario = novoSalario;
+}
+
+void encontrarMinMaxSalario(const struct Funcionario vetor[], int tamanho) {
+    int indiceMaiorSalario = 0;
+    int indiceMenorSalario = 0;
+
+    for (int i = 1; i < tamanho; i++) {
+        if (vetor[i].salario > vetor[indiceMaiorSalario].salario) {
+            indiceMaiorSalario = i;
+        }
+        if (vetor[i].salario < vetor[indiceMenorSalario].salario) {
+            indiceMenorSalario = i;
+        }
+    }
+
+    printf("\nFuncionario com maior salario:\n");
+    printf("Cargo: %s\n", vetor[indiceMaiorSalario].cargo);
+    printf("Salario: %.2f\n", vetor[indiceMaiorSalario].salario);
+    printf("\nFuncionario com menor salario:\n");
+    printf("Cargo: %s\n", vetor[indiceMenorSalario].cargo);
+    printf("Salario: %.2f\n", vetor[indiceMenorSalario].salario);
+}
+
+int main() {
+    struct Funcionario funcionarios[5]; // Criar um vetor de 5 funcionários
+
+    for (int i = 0; i < 5; i++) {
+        printf("\nPreencha as informacoes para o funcionario %d:\n", i + 1);
+        preencherFuncionario(&funcionarios[i]);
+    }
+    for (int i = 0; i < 5; i++) {
+        imprimirFuncionario(&funcionarios[i]);
+    }
+
+    alterarSalario(&funcionarios[0], 1500.0);
+
+    printf("\nApos a alteracao do salario:\n");
+    imprimirFuncionario(&funcionarios[0]);
+
+    encontrarMinMaxSalario(funcionarios, 5);
+
+    return 0;
+}
