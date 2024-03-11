@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <string.h>
+
+typedef struct Pessoa {
+    char nome[50];
+    char documento[20];
+    int idade;
+}Pessoa;
+
+void preencherPessoa(Pessoa *pessoa) {
+    printf("Digite o nome da pessoa: ");
+    scanf("%s", pessoa->nome);
+
+    printf("Digite o numero do documento da pessoa: ");
+    scanf("%s", pessoa->documento);
+
+    printf("Digite a idade da pessoa: ");
+    scanf("%d", &pessoa->idade);
+}
+
+void imprimirPessoa(const Pessoa *pessoa) {
+    printf("\nInformacoes da pessoa:\n");
+    printf("Nome: %s\n", pessoa->nome);
+    printf("Numero do documento: %s\n", pessoa->documento);
+    printf("Idade: %d\n", pessoa->idade);
+}
+
+void atualizarIdade(Pessoa *pessoa, int novaIdade) {
+    pessoa->idade = novaIdade;
+}
+
+void encontrarMaisVelhaMaisNova(const Pessoa vetor[], int tamanho) {
+    int indiceMaisVelha = 0;
+    int indiceMaisNova = 0;
+
+    for (int i = 1; i < tamanho; i++) {
+        if (vetor[i].idade > vetor[indiceMaisVelha].idade) {
+            indiceMaisVelha = i;
+        }
+        if (vetor[i].idade < vetor[indiceMaisNova].idade) {
+            indiceMaisNova = i;
+        }
+    }
+
+    printf("\nPessoa mais velha:\n");
+    imprimirPessoa(&vetor[indiceMaisVelha]);
+    printf("\nPessoa mais nova:\n");
+    imprimirPessoa(&vetor[indiceMaisNova]);
+}
+
+int main() {
+    Pessoa pessoas[5]; 
+
+    for (int i = 0; i < 5; i++) {
+        printf("\nPreencha as informacoes para a pessoa %d:\n", i + 1);
+        preencherPessoa(&pessoas[i]);
+    }
+    for (int i = 0; i < 5; i++) {
+        imprimirPessoa(&pessoas[i]);
+    }
+    atualizarIdade(&pessoas[0], 30);
+    printf("\nApos a atualizacao da idade:\n");
+    imprimirPessoa(&pessoas[0]);
+    encontrarMaisVelhaMaisNova(pessoas, 5);
+    return 0;
+}
